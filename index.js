@@ -54,4 +54,19 @@ app.post('/api/query', async (req, res) => {
 
     const answer = docs.length ? docs.map(d => d.text).join("\n---\n") : "No se encontró información relevante.";
 
-    res.json({ ans
+    res.json({ answer });
+  } catch (err) {
+    console.error("Error en /api/query:", err);
+    res.status(500).json({ error: "Error al procesar la consulta" });
+  }
+});
+
+// Servir frontend para cualquier otra ruta
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+});
+
+// Arrancar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
