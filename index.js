@@ -11,7 +11,15 @@ app.use(bodyParser.json());
 
 // API ENDPOINTS
 app.post('/api/add', async (req, res) => {
-  res.json({ message: 'Dato agregado' });
+  console.log("💡 Body recibido en /api/add:", req.body);
+
+  if (!req.body.text) {
+    return res.status(400).json({ error: "No se recibió ningún texto" });
+  }
+
+  // Aquí iría tu lógica normal de guardar en MongoDB
+  // Por ahora solo devolvemos un mensaje de prueba
+  res.json({ message: `Dato recibido: ${req.body.text}` });
 });
 
 app.post('/api/query', async (req, res) => {
